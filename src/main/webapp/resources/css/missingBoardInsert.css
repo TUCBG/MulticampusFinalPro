@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.insert_container {
+	width: 1300px;
+	height: 700px;
+	margin: 0 auto;
+}
+
+.insert_info {
+	width: 900px;
+	background: #E0E0E0;
+	margin: 0 auto;
+	font-size: 23px;
+	position: relative;
+	border-radius: 10px;
+}
+
+.insert_info>form>ul>li {
+	margin-bottom: 15px;
+}
+
+.insert_title {
+	margin: 25px 200px;
+}
+
+.insert_info>form {
+	width: 650px;
+	margin: 0 auto;
+}
+
+.insert_info input[type=text] {
+	width: 230px;
+	height: 30px;
+	border-radius: 5px;
+	font-size: 15px;
+}
+
+.insert_info input[type=radio] {
+	height: 16px;
+	width: 22px;
+}
+
+.insert_info>form>ul>li input[type=date] {
+	width: 200px;
+	height: 30px;
+	font-size: 20px;
+}
+
+.insert_select {
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+}
+
+.insert_btn1 {
+	position: absolute;
+	left: 340px;
+	bottom: 20px;
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: 700;
+	border-radius: 10px;
+}
+
+.insert_btn2 {
+	width: 100px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: 700;
+	border-radius: 10px;
+	margin-left: 467px;
+	margin-bottom: 20px;
+}
+
+#d_file {
+	margin-left: 117px;
+}

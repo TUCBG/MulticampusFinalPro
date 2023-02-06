@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="medical">
+	<select id="selectAll" parameterType="MedicalVO" resultType="MedicalVO">
+		select * from medical where replace (medicalName, ' ', '') like replace(CONCAT("%", #{medicalName}, "%"), ' ', '') and lAddr like CONCAT("%", #{medicalLocationArea1}, "%","%", #{medicalLocationArea2}, "%")
+	</select>
+	
+	<select id="selectLoad" parameterType="MedicalVO" resultType="MedicalVO">
+		select * from medical where lAddr like CONCAT("%", #{medicalLocationArea1}, "%","%", #{medicalLocationArea2}, "%")
+	</select>
+	
+	<select id="selectOne" parameterType="MedicalVO" resultType="MedicalVO">
+		select * from medical where medicalId = #{medicalId}
+	</select>
+</mapper>

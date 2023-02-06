@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="missingBoard">
+	<select id="list" resultType="missingBoardVO"
+		parameterType="missingPageVO">
+		select * from(
+		select
+		row_number() over(order by missingId
+		desc) as missing_no,
+		m.*
+		from missingboard m ) m2
+		where m2.missing_no
+		between #{start} and #{end}
+	</select>
+
+	<select id="listNavi" resultType="missingBoardVO"
+		parameterType="missingPageVO">
+		select * from(
+		select
+		row_number() over(partition by
+		location order by missingId desc) as missing_no,
+		m.*
+		from missingboard m
+		) m2
+		where (m2.missing_no between #{start} and #{end}) and location = #{location}
+	</select>
+
+	<select id="count" resultType="Integer">
+		select count(*) from missingboard
+	</select>
+
+	<select id="countNavi" parameterType="missingPageVO" resultType="Integer">
+		select count(*) from missingboard where location = #{location}
+	</select>
+
+	<select id="one" parameterType="missingBoardVO"
+		resultType="missingBoardVO">
+		select * from missingboard where missingId = #{missingId}
+	</select>
+
+	<insert id="insert" parameterType="missingBoardVO">
+		insert into missingboard
+		values
+		(null, #{userId}, #{title}, #{location}, #{tel}, #{pet}, #{createAt},
+		#{description}, #{gratuity}, #{img1}, #{img2}, #{img3}, #{rule},
+		#{missingDate})
+	</insert>
+
+	<select id="filterList" resultType="missingBoardVO"
+		parameterType="missingFilterVO">
+		select * from(
+		select
+		row_number() over(partition by
+		location, pet order by missingId desc) as
+		missing_no,
+		m.*
+		from
+		missingboard m ) m2
+		where (m2.missing_no between #{start} and #{end})
+		and location = #{location} and pet = #{pet}
+	</select>
+
+	<select id="filterCount" resultType="Integer"
+		parameterType="missingFilterVO">
+		select count(*) from missingboard where location =
+		#{location} and pet = #{pet}
+	</select>
+
+	<delete id="delete" parameterType="missingBoardVO">
+		delete from missingboard where
+		missingId = #{missingId}
+	</delete>
+
+	<update id="modify" parameterType="missingBoardVO">
+		update missingboard set title
+		= #{title}, location = #{location}, tel = #{tel}, pet =
+		#{pet},
+		description = #{description}, gratuity = #{gratuity}, img1 =
+		#{img1},
+		img2 = #{img2}, img3 = #{img3},missingDate = #{missingDate}
+		where
+		missingId = #{missingId}
+	</update>
+
+	<update id="missingEnd" parameterType="missingBoardVO">
+		update missingboard set
+		rule = 1
+		where
+		missingId = #{missingId}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

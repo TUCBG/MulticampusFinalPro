@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- SQL문 정의할 때 VO표현을 간단하게 하고 싶은 경우. 별명을 지어서 사용 -->
+	<typeAliases>
+		<typeAlias type="com.multi.animal.adopt.AdoptVO" alias="adoptVO"></typeAlias>
+		<typeAlias type="com.multi.animal.adopt.PageVO" alias="pageVO2"></typeAlias>
+		<typeAlias type="com.multi.animal.adopt.AdoptPageVO" alias="adoptPageVO"></typeAlias>
+		<typeAlias type="com.multi.animal.medical.MedicalVO" alias="MedicalVO"></typeAlias>
+		<typeAlias type="com.multi.animal.market.MarketVO" alias="marketVO"></typeAlias>
+      	<typeAlias type="com.multi.animal.message.MessageVO" alias="messageVO"></typeAlias>
+      	<typeAlias type="com.multi.animal.market.PageVO" alias="marketPageVO"></typeAlias>
+      	<typeAlias type="com.multi.animal.sitter.SitterVO" alias="sitterVO"></typeAlias>
+		<typeAlias type="com.multi.animal.sitter.PageVO" alias="sitterPageVO"></typeAlias>
+		<typeAlias type="com.multi.animal.sitter.FilterVO" alias="sitterFilterVO"></typeAlias>
+		<typeAlias type="com.multi.animal.user.UserVO" alias="userVO"></typeAlias>
+		<typeAlias type="com.multi.animal.missingBoard.MissingBoardVO" alias="missingBoardVO"></typeAlias>
+      <typeAlias type="com.multi.animal.PageVO" alias="missingPageVO"></typeAlias>
+      <typeAlias type="com.multi.animal.FilterVO" alias="missingFilterVO"></typeAlias>
+	</typeAliases>
+	
+	<mappers>
+		<!-- SQL문 정의하는 파일들의 목록을 지정. -->
+		<mapper resource="mapper/AdoptMapper.xml" />
+		<mapper resource="mapper/medicalMapper.xml" />
+		<mapper resource="mapper/marketMapper.xml" />
+        <mapper resource="mapper/messageMapper.xml" />
+        <mapper resource="mapper/sitterMapper.xml" />
+		<mapper resource="mapper/userMapper.xml" />
+		<mapper resource="mapper/missingBoardMapper.xml" />
+	</mappers>
+</configuration>

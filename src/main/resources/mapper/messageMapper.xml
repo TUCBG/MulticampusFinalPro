@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="message">
+<insert id="insert" parameterType="messageVO" useGeneratedKeys="true" keyProperty="messageId">
+	insert into message values (null,#{marketId},#{messageSender},#{messageTaker},#{messageContent},#{time})
+</insert>
+<select id="messageList" parameterType="messageVO" resultType="messageVO">
+	select * from message where marketId = #{marketId} and ((messageSender = #{sessionId} and messageTaker = #{partner}) or (messageTaker = #{sessionId} and  messageSender = #{partner})) order by messageId asc
+</select>
+<select id="chatRoomList" parameterType="messageVO" resultType="messageVO">
+	select * from (select row_number() over (partition by t1.marketId, t1.result order by t1.messageId desc) as message_no, t1.* from (select if(STRCMP(messageSender,messageTaker)=1,concat(messageSender,'_',messageTaker),concat(messageTaker,'_',messageSender)) as result, m1.*, m2.title, m2.price, m2.img from message m1 left join market m2 on m1.marketId = m2.marketId where m1.messageSender = #{sessionId} or m1.messageTaker = #{sessionId}) t1) t2 where t2.message_no = 1 order by t2.messageId desc
+</select>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adopt">
+	<select id="all" parameterType="adoptPageVO" resultType="adoptPageVO">
+		select * FROM (
+			select ROW_NUMBER() over(ORDER by ab.adoptId DESC)
+			as adoptBoard_no, ab.*
+			FROM adoptBoard ab 
+			<!-- ) ab2
+		WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end} -->
+		
+		<if test='pPlace == "null"' >
+			) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+		</if>
+		
+		<if test='pPlace != "null"' >
+				where pPlace like CONCAT("%", #{pPlace} , "%") ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+		</if>
+	</select>
+	
+	<select id="one" parameterType="adoptVO" resultType="adoptVO">
+		select * from adoptBoard where adoptId = #{adoptId} 
+	</select>
+	
+	<select id="count" parameterType="adoptPageVO" resultType="Integer">
+		select count(*) from adoptBoard 
+		
+		<if test='pPlace != "null"' >
+			where pPlace like CONCAT("%", #{pPlace} , "%")
+		</if>
+		
+		<if test='pPlace == "null"' >
+			
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="adoptVO">
+		insert into adoptBoard values
+		(
+		#{adoptId},
+		#{userId},
+		#{date},
+		#{pet},
+		#{variety},
+		#{noGender},
+		#{gender},
+		#{weight},
+		#{fPlace},
+		#{pPlace},
+		#{tel},
+		#{special},
+		#{img},
+		#{finish}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="adoptVO">
+		delete from adoptBoard where adoptId = #{adoptId}
+	</delete>
+	
+	<update id="update" parameterType="adoptVO">
+		update adoptBoard 
+		set 
+			userId = #{userId},
+			pet= #{pet}, 
+			variety= #{variety}, 
+			gender= #{gender}, 
+			noGender= #{noGender}, 
+			weight= #{weight}, 
+			fPlace= #{fPlace}, 
+			pPlace= #{pPlace}, 
+			tel= #{tel}, 
+			special= #{special},
+			img = #{img},
+			finish = #{finish}
+		WHERE adoptId = #{adoptId}
+	
+	</update>
+	
+	<select id="search2" parameterType="adoptPageVO" resultType="adoptPageVO">
+		
+			select * FROM (
+			select ROW_NUMBER() over(ORDER by ab.adoptId DESC)
+			as adoptBoard_no, ab.*
+			FROM adoptBoard ab 
+			
+			<if test='pPlace == "지역" and pet == "동물" and gender == "성별"' >
+				) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			
+			<if test='pPlace != "지역" and pet == "동물" and gender == "성별"' >
+				where pPlace like CONCAT("%", #{pPlace} , "%") ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			
+			<if test='pPlace == "지역" and pet != "동물" and gender == "성별"' >
+				where pet = '${pet}' ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			
+			<if test='pPlace == "지역" and pet == "동물" and gender != "성별"' >
+				where gender = '${gender}' ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			 
+			<if test='pPlace != "지역" and pet != "동물" and gender == "성별"' >
+				where pPlace like CONCAT("%", #{pPlace} , "%") and pet = '${pet}' ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			
+			<if test='pPlace != "지역" and pet == "동물" and gender != "성별"' >
+				where pPlace like CONCAT("%", #{pPlace} , "%") and gender = '${gender}' ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			
+			<if test='pPlace == "지역" and pet != "동물" and gender != "성별"' >
+				where pet = '${pet}' and gender = '${gender}' ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+			
+			
+			<if test='pPlace != "지역" and pet != "동물" and gender != "성별"'>
+				where pPlace like CONCAT("%", #{pPlace} , "%") and pet = '${pet}' and gender = '${gender}' ) ab2
+			WHERE ab2.adoptBoard_no BETWEEN #{start} and #{end}
+			</if>
+	</select>
+	
+	<select id="count2" parameterType="adoptVO" resultType="Integer">
+		select count(*) from adoptBoard 
+		<if test='pPlace != "지역" and pet == "동물" and gender == "성별"' >
+			where pPlace like CONCAT("%", #{pPlace} , "%")
+		</if>
+		
+		<if test='pPlace == "지역" and pet != "동물" and gender == "성별"' >
+			where pet = '${pet}'
+		</if>
+		
+		<if test='pPlace == "지역" and pet == "동물" and gender != "성별"' >
+			where gender = '${gender}'
+		</if>
+		 
+		<if test='pPlace != "지역" and pet != "동물" and gender == "성별"' >
+			where pPlace like CONCAT("%", #{pPlace} , "%") and pet = '${pet}'
+		</if>
+		
+		<if test='pPlace != "지역" and pet == "동물" and gender != "성별"' >
+			where pPlace like CONCAT("%", #{pPlace} , "%") and gender = '${gender}'
+		</if>
+		
+		<if test='pPlace == "지역" and pet != "동물" and gender != "성별"' >
+			where pet = '${pet}' and gender = '${gender}'
+		</if>
+		
+		
+		<if test='pPlace != "지역" and pet != "동물" and gender != "성별"'>
+			where pPlace like CONCAT("%", #{pPlace} , "%") and pet = '${pet}' and gender = '${gender}'
+		</if>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
